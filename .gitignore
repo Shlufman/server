@@ -1,1 +1,11 @@
-.env
+# dependencies
+/node_modules
+
+# production
+/build
+
+.env.DB_URL
+.env.JWT_ACCESS_SECRET
+.env.JWT_REFRESH_SECRET
+.env.SMTP_USER
+.env.SMTP_PASSWORD
