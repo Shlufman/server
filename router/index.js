@@ -8,10 +8,10 @@ const authMiddleware = require('../middlewares/auth-middleware');
 router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // или указать конкретные источники
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Укажите нужные методы
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', true);
 
-    if (req.method === 'OPTIONS') {
+    if (req.method === 'GET' || req.method === 'POST') {
         res.sendStatus(200); // Отправляем успешный ответ для предварительного запроса
     } else {
         next();
