@@ -4,8 +4,19 @@ const userController = require('../controllers/user-controller');
 const router = new Router();
 const {body} = require('express-validator');
 const authMiddleware = require('../middlewares/auth-middleware');
-router.use(cors());
+// router.use(cors());
+router.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // или указать конкретные источники
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Укажите нужные методы
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200); // Отправляем успешный ответ для предварительного запроса
+    } else {
+        next();
+    }
+});
 
 router.post('/registration',
     body('email').isEmail(),
