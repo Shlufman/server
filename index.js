@@ -7,22 +7,23 @@ const { body } = require('express-validator');
 const app = express();
 
 // Middleware для обработки CORS-заголовков для всего приложения
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type');
-//     res.header('Access-Control-Allow-Credentials', true);
-//
-//     if (req.method === 'OPTIONS') {
-//         res.header('Access-Control-Allow-Origin', '*'); // или укажите конкретные источники
-//         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//         res.header('Access-Control-Allow-Headers', 'Content-Type');
-//         res.header('Access-Control-Allow-Credentials', true);
-//         res.sendStatus(200);
-//     } else {
-//         next();
-//     }
-// });
+app.use((req, res, next) => {
+    console.log('!!!')
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
+
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Origin', '*'); // или укажите конкретные источники
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        res.header('Access-Control-Allow-Credentials', true);
+        res.sendStatus(200);
+    } else {
+        next();
+    }
+});
 
 // Пример маршрута
 app.get("/simple-cors", (req, res) => {
