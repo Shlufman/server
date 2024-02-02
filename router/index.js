@@ -14,6 +14,8 @@ app.use(cors({
   credentials: true, // Разрешаем отправку куки и заголовка Authorization
 }));
 
+app.options('*', cors());
+
 app.post('/registration',
     body('email').isEmail(),
     body('password').isLength({min: 3, max: 32}),
