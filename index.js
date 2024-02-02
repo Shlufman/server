@@ -31,16 +31,28 @@ app.get("/no-cors", (req, res) => {
 /* -------------------------------------------------------------------------- */
 
 app.head("/simple-cors", cors({origin: '*'}), (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
     console.info("HEAD /simple-cors");
     res.sendStatus(204);
 });
 app.get("/simple-cors", cors({origin: '*'}), (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
     console.info("GET /simple-cors");
     res.json({
         text: "Simple CORS requests are working. [GET]"
     });
 });
 app.post("/simple-cors", cors({origin: '*'}), (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
     console.info("POST /simple-cors");
     res.json({
         text: "Simple CORS requests are working. [POST]"
