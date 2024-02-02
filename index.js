@@ -1,43 +1,12 @@
-require('dotenv').config()
 const express = require('express');
 const cors = require('cors');
-const cookieParser = require('cookie-parser')
-const mongoose = require('mongoose');
-const router = require('./router/index')
-const errorMiddleware = require('./middlewares/error-middleware');
+const { body } = require('express-validator');
+// const authMiddleware = require('../middlewares/auth-middleware');
+// const userController = require('../controllers/user-controller');
 
-const PORT = process.env.PORT || 80;
-const app = express()
+const app = express();
 
-// app.use(express.json());
-// app.use(cookieParser());
-// app.use(cors({
-//     credentials: true,
-//     origin: '*',
-//     // origin: process.env.CLIENT_URL
-// }));
-// app.options('*', cors());
-// app.use('/api', router);
-// app.use(errorMiddleware);
-
-
-app.get("/no-cors", (req, res) => {
-    console.info("GET /no-cors");
-    res.json({
-        text: "You should not see this via a CORS request."
-    });
-});
-
-/* -------------------------------------------------------------------------- */
-
-// app.head("/simple-cors", cors({origin: '*'}), (req, res) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type');
-//     res.header('Access-Control-Allow-Credentials', true);
-//     console.info("HEAD /simple-cors");
-//     res.sendStatus(204);
-// });
+// Middleware для обработки CORS-заголовков для всего приложения
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -55,76 +24,41 @@ app.use((req, res, next) => {
     }
 });
 
-
+// Пример маршрута
 app.get("/simple-cors", (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Credentials', true);
     console.info("GET /simple-cors");
     res.json({
         text: "Simple CORS requests are working. [GET]"
     });
 });
-app.post("/simple-cors", (req, res) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Credentials', true);
-    console.info("POST /simple-cors");
+
+// Еще один пример маршрута
+app.post("/other-route", (req, res) => {
+    console.info("POST /other-route");
     res.json({
-        text: "Simple CORS requests are working. [POST]"
+        text: "Other route. [POST]"
     });
 });
 
-/* -------------------------------------------------------------------------- */
+// Ваши другие маршруты...
 
-app.options("/complex-cors", cors({origin: '*'}));
-app.delete("/complex-cors", cors({origin: '*'}), (req, res) => {
-    console.info("DELETE /complex-cors");
-    res.json({
-        text: "Complex CORS requests are working. [DELETE]"
+// Обработка ошибки 404
+app.use((req, res, next) => {
+    res.status(404).json({
+        error: "Not Found"
     });
 });
 
-/* -------------------------------------------------------------------------- */
-
-const issue2options = {
-    origin: true,
-    methods: ["POST"],
-    credentials: true,
-    maxAge: 3600
-};
-app.options("/issue-2", cors(issue2options));
-app.post("/issue-2", cors(issue2options), (req, res) => {
-    console.info("POST /issue-2");
-    res.json({
-        text: "Issue #2 is fixed."
+// Обработка ошибок
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        error: "Internal Server Error"
     });
 });
 
-/* -------------------------------------------------------------------------- */
+const PORT = process.env.PORT || 3000;
 
-if (!module.parent) {
-    // const port = process.env.PORT || 3001;
-
-    app.listen(PORT, () => {
-        console.log("Express server listening on port " + PORT + ".");
-    });
-}
-
-
-
-const start = async () => {
-    try {
-        await mongoose.connect(process.env.DB_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        })
-        app.listen(PORT, () => console.log(`Server started on PORT = ${PORT}`))
-    } catch (e) {
-        console.log(e);
-    }
-}
-
-// start()
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
