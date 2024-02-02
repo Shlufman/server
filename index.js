@@ -37,6 +37,7 @@ app.options('*', (req, res) => {
 // Пример маршрута
 app.get("/simple-cors", (req, res) => {
     console.info("GET /simple-cors");
+    console.log('req: ',req);
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
