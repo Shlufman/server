@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { body } = require('express-validator');
+const {body} = require('express-validator');
 // const authMiddleware = require('../middlewares/auth-middleware');
 // const userController = require('../controllers/user-controller');
 
@@ -24,6 +24,9 @@ const app = express();
 //         next();
 //     }
 // });
+app.use(cors({
+    origin: "*"
+}))
 
 app.options('*', (req, res) => {
     console.log('!!!')
@@ -37,7 +40,7 @@ app.options('*', (req, res) => {
 // Пример маршрута
 app.get("/simple-cors", (req, res) => {
     console.info("GET /simple-cors");
-    console.log('req: ',req);
+    console.log('req: ', req);
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
