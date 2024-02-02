@@ -1,9 +1,17 @@
-const Router = require('express').Router;
+// const Router = require('express').Router;
+// const router = new Router();
+
+const { Router } = require('express');
+const router = Router();
+
 const cors = require('cors');
-const userController = require('../controllers/user-controller');
-const router = new Router();
-const {body} = require('express-validator');
+
+const { body } = require('express-validator');
 const authMiddleware = require('../middlewares/auth-middleware');
+const userController = require('../controllers/user-controller');
+
+router.use(cors());
+
 // router.use(cors());
 router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // или указать конкретные источники
