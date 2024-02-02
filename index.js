@@ -48,7 +48,12 @@ app.use((req, res, next) => {
 });
 
 // Middleware для обработки предварительных запросов OPTIONS
-app.options('*', cors());
+app.options('*', cors(cors({
+    origin: '*', // или укажите конкретные источники
+    methods: 'GET, POST, PUT, DELETE',
+    allowedHeaders: 'Content-Type',
+    credentials: true,
+})));
 
 app.get("/simple-cors", cors({origin: '*'}), (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
