@@ -29,7 +29,24 @@ app.use(cors({
     withCredentials: true
 }))
 
-app.options('*', (req, res) => {
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+//     res.header('Access-Control-Allow-Credentials', true);
+//
+//     if (req.method === 'OPTIONS') {
+//         res.header('Access-Control-Allow-Origin', '*');
+//         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//         res.header('Access-Control-Allow-Headers', 'Content-Type');
+//         res.header('Access-Control-Allow-Credentials', true);
+//         res.sendStatus(200);
+//     } else {
+//         next();
+//     }
+// });
+
+app.options("/simple-cors", (req, res) => {
     console.log('!!!')
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
