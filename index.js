@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const router = require('./router/index')
 const errorMiddleware = require('./middlewares/error-middleware');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 80;
 const app = express()
 
 // app.use(express.json());
@@ -30,17 +30,17 @@ app.get("/no-cors", (req, res) => {
 
 /* -------------------------------------------------------------------------- */
 
-app.head("/simple-cors", cors(), (req, res) => {
+app.head("/simple-cors", cors({origin: '*'}), (req, res) => {
     console.info("HEAD /simple-cors");
     res.sendStatus(204);
 });
-app.get("/simple-cors", cors(), (req, res) => {
+app.get("/simple-cors", cors({origin: '*'}), (req, res) => {
     console.info("GET /simple-cors");
     res.json({
         text: "Simple CORS requests are working. [GET]"
     });
 });
-app.post("/simple-cors", cors(), (req, res) => {
+app.post("/simple-cors", cors({origin: '*'}), (req, res) => {
     console.info("POST /simple-cors");
     res.json({
         text: "Simple CORS requests are working. [POST]"
@@ -49,8 +49,8 @@ app.post("/simple-cors", cors(), (req, res) => {
 
 /* -------------------------------------------------------------------------- */
 
-app.options("/complex-cors", cors());
-app.delete("/complex-cors", cors(), (req, res) => {
+app.options("/complex-cors", cors({origin: '*'}));
+app.delete("/complex-cors", cors({origin: '*'}), (req, res) => {
     console.info("DELETE /complex-cors");
     res.json({
         text: "Complex CORS requests are working. [DELETE]"
