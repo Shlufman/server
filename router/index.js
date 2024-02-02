@@ -1,30 +1,31 @@
-// const Router = require('express').Router;
-// const router = new Router();
-
 const { Router } = require('express');
 const router = Router();
-
 const cors = require('cors');
-
 const { body } = require('express-validator');
 const authMiddleware = require('../middlewares/auth-middleware');
 const userController = require('../controllers/user-controller');
 
-router.use(cors());
+// Используем cors middleware для обработки CORS-заголовков
+router.use(cors({
+  origin: '*', // Укажите конкретный источник вашего фронтенда
+  methods: 'GET, POST, PUT, DELETE', // Укажите нужные методы
+  allowedHeaders: 'Content-Type', // Укажите разрешенные заголовки
+  credentials: true, // Разрешаем отправку куки и заголовка Authorization
+}));
 
-router.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'); // или указать конкретные источники
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Укажите нужные методы
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-
-    if (req.method === 'OPTIONS') {
-        res.sendStatus(200); // Отправляем успешный ответ для предварительного запроса
-    } else {
-        next();
-    }
-});
+// router.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*'); // или указать конкретные источники
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Укажите нужные методы
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+//     res.header('Access-Control-Allow-Credentials', true);
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+//
+//     if (req.method === 'OPTIONS') {
+//         res.sendStatus(200); // Отправляем успешный ответ для предварительного запроса
+//     } else {
+//         next();
+//     }
+// });
 
 router.post('/registration',
     body('email').isEmail(),
