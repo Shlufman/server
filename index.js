@@ -44,18 +44,19 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', true);
 
-    next();
+    if (req.method === 'OPTIONS') {
+        res.header('Access-Control-Allow-Origin', '*'); // или укажите конкретные источники
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        res.header('Access-Control-Allow-Credentials', true);
+        res.sendStatus(200);
+    } else {
+        next();
+    }
 });
 
-// Middleware для обработки предварительных запросов OPTIONS
-app.options('*', cors(cors({
-    origin: '*', // или укажите конкретные источники
-    methods: 'GET, POST, PUT, DELETE',
-    allowedHeaders: 'Content-Type',
-    credentials: true,
-})));
 
-app.get("/simple-cors", cors({origin: '*'}), (req, res) => {
+app.get("/simple-cors", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -65,7 +66,7 @@ app.get("/simple-cors", cors({origin: '*'}), (req, res) => {
         text: "Simple CORS requests are working. [GET]"
     });
 });
-app.post("/simple-cors", cors({origin: '*'}), (req, res) => {
+app.post("/simple-cors", (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
