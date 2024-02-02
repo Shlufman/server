@@ -24,10 +24,11 @@ const app = express();
 //         next();
 //     }
 // });
-app.use(cors({
-    origin: "*",
-    withCredentials: true
-}))
+const corsOptions = {
+    origin: /\.onrender\.com$/,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+withCredentials: true};
+app.use(cors(corsOptions));
 
 // app.use((req, res, next) => {
 //     res.header('Access-Control-Allow-Origin', '*');
