@@ -37,11 +37,24 @@ app.options('*', (req, res) => {
 // Пример маршрута
 app.get("/simple-cors", (req, res) => {
     console.info("GET /simple-cors");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
     res.json({
         text: "Simple CORS requests are working. [GET]"
     });
 });
-
+app.options("/simple-cors", (req, res) => {
+    console.info("GET /simple-cors");
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.json({
+        text: "Simple CORS requests are working. [GET]"
+    });
+});
 // Еще один пример маршрута
 app.post("/other-route", (req, res) => {
     console.info("POST /other-route");
