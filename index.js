@@ -44,12 +44,11 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', true);
 
-    if (req.method === 'OPTIONS') {
-        res.sendStatus(200); // Отправляем успешный ответ для предварительного запроса OPTIONS
-    } else {
-        next();
-    }
+    next();
 });
+
+// Middleware для обработки предварительных запросов OPTIONS
+app.options('*', cors());
 
 app.get("/simple-cors", cors({origin: '*'}), (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
