@@ -17,6 +17,7 @@ app.use(cors({
 app.options('*', cors());
 
 app.post('/registration',
+    cors({ origin: ['*', 'http://localhost:5500', 'http://localhost:3000' ]}),
     body('email').isEmail(),
     body('password').isLength({min: 3, max: 32}),
     userController.registration
