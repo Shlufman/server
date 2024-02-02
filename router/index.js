@@ -11,7 +11,7 @@ router.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', true);
 
-    if (req.method === 'GET' || req.method === 'POST') {
+    if (req.method === 'OPTIONS') {
         res.sendStatus(200); // Отправляем успешный ответ для предварительного запроса
     } else {
         next();
