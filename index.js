@@ -30,14 +30,27 @@ app.get("/no-cors", (req, res) => {
 
 /* -------------------------------------------------------------------------- */
 
-app.head("/simple-cors", cors({origin: '*'}), (req, res) => {
+// app.head("/simple-cors", cors({origin: '*'}), (req, res) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type');
+//     res.header('Access-Control-Allow-Credentials', true);
+//     console.info("HEAD /simple-cors");
+//     res.sendStatus(204);
+// });
+app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', true);
-    console.info("HEAD /simple-cors");
-    res.sendStatus(204);
+
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200); // Отправляем успешный ответ для предварительного запроса OPTIONS
+    } else {
+        next();
+    }
 });
+
 app.get("/simple-cors", cors({origin: '*'}), (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
