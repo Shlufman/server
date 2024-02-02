@@ -12,12 +12,12 @@ const userController = require('../controllers/user-controller');
 
 router.use(cors());
 
-// router.use(cors());
 router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // или указать конкретные источники
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Укажите нужные методы
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
 
     if (req.method === 'OPTIONS') {
         res.sendStatus(200); // Отправляем успешный ответ для предварительного запроса
