@@ -72,7 +72,9 @@ app.get("/simple-cors", (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Connection', 'keep-alive');
+    res.header('Origin','http://localhost:3000');
     res.json({
         text: "Simple CORS requests are working. [GET]"
     });
